@@ -1,4 +1,4 @@
-\I have excluded the assets as I can otherwise not open-source this repository. However, it should still include most of what you need to look at including the code and scenes.
+I have excluded the assets as I can otherwise not open-source this repository. However, it should still include most of what you need to look at including the code and scenes.
 
 You will need to download the following addon to run this project:
 - godot-jolt
