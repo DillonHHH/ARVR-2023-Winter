@@ -1,4 +1,4 @@
-Do not reuse the assets, but feel free to reuse everything else. The License isn't open-source because I wanted to include the assets in the repository and they have varying licenses.
+I have excluded the assets as I can otherwise not open-source this repository.
 
 You will need to download the following addon to run this project:
 - godot-jolt
