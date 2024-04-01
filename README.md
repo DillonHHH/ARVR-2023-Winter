@@ -1,3 +1,5 @@
+Do not reuse the assets, but feel free to reuse everything else. The License isn't open-source because I wanted to include the assets in the repository and they have varying licenses.
+
 You will need to download the following addon to run this project:
 - godot-jolt
 - godot xr tools
