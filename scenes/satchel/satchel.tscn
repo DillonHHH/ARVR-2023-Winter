@@ -1,0 +1,62 @@
+[gd_scene load_steps=11 format=3 uid="uid://dtytcaccqsyot"]
+
+[ext_resource type="PackedScene" uid="uid://djrr3b0f6m60o" path="res://scenes/grab_spot_ambiguous/grab_spot_ambiguous.tscn" id="1_0a73m"]
+[ext_resource type="Script" path="res://scenes/satchel/grab_spot_ambiguous_satchel.gd" id="2_t5hkh"]
+[ext_resource type="PackedScene" uid="uid://cgxw0wyknem6a" path="res://scenes/grab_spot_ambiguous/grab_point_left.tscn" id="4_g8s4d"]
+[ext_resource type="PackedScene" uid="uid://ddmfo1i6bydc2" path="res://scenes/grab_spot_ambiguous/grab_point_right.tscn" id="5_hctg3"]
+[ext_resource type="AudioStream" uid="uid://c31qx061ucrcs" path="res://assets/sfx/explosion-with-rubble-debris-short-smartsound-fx-1-00-02.mp3" id="6_ws0uy"]
+[ext_resource type="PackedScene" uid="uid://bmiv7b3bpcuif" path="res://assets/c4/c4.gltf" id="7_gvbs5"]
+[ext_resource type="Script" path="res://scripts/play_audio_and_free.gd" id="7_hq061"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_7p7ec"]
+radius = 0.122483
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_qpjfg"]
+radius = 1.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ffko2"]
+size = Vector3(6.25382, 2.47891, 8.93384)
+
+[node name="Satchel" type="RigidBody3D"]
+
+[node name="GrabSpotAmbiguous" parent="." node_paths=PackedStringArray("timer", "ExplosionSound") instance=ExtResource("1_0a73m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.214903, 1.63056, 0.238168)
+script = ExtResource("2_t5hkh")
+timer = NodePath("../Timer")
+explosion_radius = 5.0
+ExplosionSound = NodePath("../ExplosionSound")
+
+[node name="GrabArea" type="CollisionShape3D" parent="GrabSpotAmbiguous"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.206733, -1.63725, -0.241428)
+shape = SubResource("SphereShape3D_7p7ec")
+
+[node name="GrabPointLeft" parent="GrabSpotAmbiguous" instance=ExtResource("4_g8s4d")]
+transform = Transform3D(-0.258819, 0.965926, 1.71867e-07, -0.965926, -0.258819, -2.26267e-08, 2.26267e-08, -1.71867e-07, 1, -0.189286, -1.60623, -0.181831)
+
+[node name="GrabPointRight" parent="GrabSpotAmbiguous" instance=ExtResource("5_hctg3")]
+transform = Transform3D(-0.25, -0.965926, 0.0669871, 0.933013, -0.258819, -0.25, 0.258819, -1.45145e-07, 0.965926, -0.22061, -1.60441, -0.174529)
+
+[node name="C4" parent="." instance=ExtResource("7_gvbs5")]
+transform = Transform3D(-0.03, 0, 2.62268e-09, 0, 0.03, 0, -2.62268e-09, 0, -0.03, 0, -0.0611633, 0)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.15
+
+[node name="ExplosionShapeCast" type="ShapeCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0220011, 0.0354649, -0.00339736)
+enabled = false
+shape = SubResource("SphereShape3D_qpjfg")
+target_position = Vector3(0, 0, 0)
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.03, 0, 0, 0, 0.03, 0, 0, 0, 0.03, 0.00221249, -0.0206233, 0.00101441)
+shape = SubResource("BoxShape3D_ffko2")
+
+[node name="ExplosionSound" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.160965, -0.41831, -0.160208)
+stream = ExtResource("6_ws0uy")
+script = ExtResource("7_hq061")
+
+[connection signal="timeout" from="Timer" to="GrabSpotAmbiguous" method="_on_timer_timeout"]
+[connection signal="finished" from="ExplosionSound" to="ExplosionSound" method="_on_finished"]

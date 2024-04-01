@@ -1,0 +1,70 @@
+[gd_scene load_steps=11 format=3 uid="uid://d3cg4g78fesy"]
+
+[ext_resource type="Script" path="res://scripts/World.gd" id="1_wwmhh"]
+[ext_resource type="PackedScene" uid="uid://dy8fwlxqi0512" path="res://scenes/player.tscn" id="2_wsuvw"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fjj1w"]
+transparency = 1
+albedo_color = Color(0.427451, 0.658824, 0.890196, 0.0941176)
+metallic = 0.18
+metallic_specular = 0.1
+refraction_enabled = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_xxftu"]
+material = SubResource("StandardMaterial3D_fjj1w")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m3d0e"]
+albedo_color = Color(0.909804, 0.866667, 0.192157, 1)
+metallic = 1.0
+metallic_specular = 0.0
+roughness = 0.46
+emission_energy_multiplier = 16.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_yeyk1"]
+material = SubResource("StandardMaterial3D_m3d0e")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aevae"]
+albedo_color = Color(0.0235294, 0.447059, 0.196078, 1)
+metallic = 0.85
+metallic_specular = 0.05
+
+[sub_resource type="BoxMesh" id="BoxMesh_j6a2b"]
+material = SubResource("StandardMaterial3D_aevae")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_82sqp"]
+
+[sub_resource type="Environment" id="Environment_xs4d0"]
+sdfgi_enabled = true
+
+[node name="World" type="Node3D"]
+script = ExtResource("1_wwmhh")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.553755, -0.83268, 0, 0.814865, 0.541908, 0.205743, -0.171318, -0.113931, 0.978606, -1.62436, -0.0417149, -2.11038)
+mesh = SubResource("BoxMesh_xxftu")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.94981, -0.309323, 0.0466889, 0.292623, 0.931282, 0.216991, -0.110601, -0.192438, 0.975056, 1.46006, -0.0457134, -2.33207)
+mesh = SubResource("BoxMesh_yeyk1")
+
+[node name="player" parent="." instance=ExtResource("2_wsuvw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 17.1239, 0)
+
+[node name="floor" type="MeshInstance3D" parent="."]
+transform = Transform3D(26.5117, 0, 0, 0, 0.144636, 0, 0, 0, 22.6761, 0, -0.273619, 0)
+mesh = SubResource("BoxMesh_j6a2b")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="floor"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="floor/StaticBody3D"]
+shape = SubResource("BoxShape3D_82sqp")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.453788, 0.89111, 0, -0.89111, 0.453788, 0.870704, 3.83882, -1.32826)
+light_energy = 4.005
+light_indirect_energy = 1.685
+light_volumetric_fog_energy = 0.755
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_xs4d0")

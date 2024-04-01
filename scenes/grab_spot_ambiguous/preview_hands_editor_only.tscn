@@ -1,0 +1,18 @@
+[gd_scene load_steps=6 format=3 uid="uid://coedb0q0mjayj"]
+
+[ext_resource type="Script" path="res://scenes/grab_spot_ambiguous/scripts/preview_hands_editor_only.gd" id="1_8c77j"]
+[ext_resource type="PackedScene" uid="uid://dhaqth6q5yw4n" path="res://addons/godot-xr-tools/hands/model/hand_l.gltf" id="2_tlu37"]
+[ext_resource type="PackedScene" uid="uid://the6y7swe6j0" path="res://addons/godot-xr-tools/hands/animations/left/AnimationPlayer.tscn" id="3_u5x3k"]
+[ext_resource type="PackedScene" uid="uid://ds1t8vc0kxoeo" path="res://addons/godot-xr-tools/hands/model/hand_r.gltf" id="4_08eau"]
+[ext_resource type="PackedScene" uid="uid://bxipj7hyjwy6f" path="res://addons/godot-xr-tools/hands/animations/right/AnimationPlayer.tscn" id="5_ueryr"]
+
+[node name="PreviewHandsEditorOnly" type="Node3D"]
+script = ExtResource("1_8c77j")
+
+[node name="HandL" parent="." instance=ExtResource("2_tlu37")]
+
+[node name="AnimationPlayer" parent="HandL" instance=ExtResource("3_u5x3k")]
+
+[node name="HandR" parent="." instance=ExtResource("4_08eau")]
+
+[node name="AnimationPlayer" parent="HandR" instance=ExtResource("5_ueryr")]

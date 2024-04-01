@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://cor11nni2o06k"]
+
+[ext_resource type="Script" path="res://scenes/rpg-7/holstered_rpg-7/rpg-7_holster.gd" id="1_u5t6v"]
+[ext_resource type="PackedScene" uid="uid://c018vi82k02rt" path="res://scenes/rpg-7/holstered_rpg-7/rpg-7_holstered.tscn" id="2_u6jrx"]
+
+[node name="Rpg-7Holster" type="Node3D"]
+script = ExtResource("1_u5t6v")
+rpg_7_holstered = ExtResource("2_u6jrx")

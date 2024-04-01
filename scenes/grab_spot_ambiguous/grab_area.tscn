@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://bj1x2l346crm4"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_apnbm"]
+radius = 0.048442
+
+[node name="GrabArea" type="CollisionShape3D"]
+shape = SubResource("SphereShape3D_apnbm")

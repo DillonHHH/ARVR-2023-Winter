@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://djrr3b0f6m60o"]
+
+[node name="GrabSpotAmbiguous" type="Area3D"]

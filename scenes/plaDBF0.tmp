@@ -1,0 +1,42 @@
+[gd_scene load_steps=7 format=3 uid="uid://dy8fwlxqi0512"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_m88un"]
+[ext_resource type="Script" path="res://scripts/controller.gd" id="2_bke5j"]
+[ext_resource type="Script" path="res://scripts/XRCamera3D.gd" id="2_hmslm"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_6f70v"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_qmdw5"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ob200"]
+radius = 0.33245
+height = 1.724
+
+[node name="player" type="CharacterBody3D"]
+script = ExtResource("1_m88un")
+
+[node name="XROrigin3D" type="XROrigin3D" parent="."]
+
+[node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D"]
+script = ExtResource("2_hmslm")
+
+[node name="XRController3D" type="XRController3D" parent="XROrigin3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0, 0)
+tracker = &"right_hand"
+script = ExtResource("2_bke5j")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="XROrigin3D/XRController3D"]
+transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_6f70v")
+
+[node name="XRController3D2" type="XRController3D" parent="XROrigin3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1, 0, 0)
+tracker = &"left_hand"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="XROrigin3D/XRController3D2"]
+transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 0, 0, 0)
+mesh = SubResource("PrismMesh_qmdw5")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.835821, 0)
+shape = SubResource("CapsuleShape3D_ob200")

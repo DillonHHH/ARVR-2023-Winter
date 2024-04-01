@@ -1,0 +1,70 @@
+[gd_scene load_steps=11 format=3 uid="uid://dy8fwlxqi0512"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_m88un"]
+[ext_resource type="Script" path="res://scripts/controller.gd" id="2_bke5j"]
+[ext_resource type="PackedScene" uid="uid://b6bk2pj8vbj28" path="res://addons/godot-xr-tools/functions/movement_turn.tscn" id="3_0tmv0"]
+[ext_resource type="PackedScene" uid="uid://drs4eeq721ojn" path="res://addons/godot-xr-tools/functions/movement_sprint.tscn" id="4_w7ucj"]
+[ext_resource type="PackedScene" uid="uid://bl2nuu3qhlb5k" path="res://addons/godot-xr-tools/functions/movement_direct.tscn" id="5_bfj2s"]
+[ext_resource type="Script" path="res://addons/godot-xr-tools/player/player_body.gd" id="6_pgitu"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_qmdw5"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_1i4ok"]
+radius = 0.0635081
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_6f70v"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ob200"]
+radius = 0.10083
+height = 0.287349
+
+[node name="player" type="CharacterBody3D"]
+script = ExtResource("1_m88un")
+
+[node name="XROrigin3D" type="XROrigin3D" parent="."]
+
+[node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D"]
+
+[node name="HandLeft" type="XRController3D" parent="XROrigin3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1, 0, 0)
+tracker = &"left_hand"
+script = ExtResource("2_bke5j")
+
+[node name="HandMesh" type="MeshInstance3D" parent="XROrigin3D/HandLeft"]
+transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 1.49012e-08, 0, 0)
+mesh = SubResource("PrismMesh_qmdw5")
+
+[node name="MovementTurn" parent="XROrigin3D/HandLeft" instance=ExtResource("3_0tmv0")]
+turn_mode = 2
+
+[node name="Area3D" type="Area3D" parent="XROrigin3D/HandLeft"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="XROrigin3D/HandLeft/Area3D"]
+shape = SubResource("SphereShape3D_1i4ok")
+
+[node name="HandRight" type="XRController3D" parent="XROrigin3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0, 0)
+tracker = &"right_hand"
+script = ExtResource("2_bke5j")
+
+[node name="HandMesh" type="MeshInstance3D" parent="XROrigin3D/HandRight"]
+transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_6f70v")
+
+[node name="MovementDirect" parent="XROrigin3D/HandRight" instance=ExtResource("5_bfj2s")]
+strafe = true
+
+[node name="Area3D" type="Area3D" parent="XROrigin3D/HandRight"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="XROrigin3D/HandRight/Area3D"]
+shape = SubResource("SphereShape3D_1i4ok")
+
+[node name="MovementSprint" parent="XROrigin3D" instance=ExtResource("4_w7ucj")]
+
+[node name="XRToolsPlayerBody" type="CharacterBody3D" parent="XROrigin3D"]
+top_level = true
+script = ExtResource("6_pgitu")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0814324, 0)
+shape = SubResource("CapsuleShape3D_ob200")

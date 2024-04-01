@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://ctglx0a6isnea"]
+
+[ext_resource type="PackedScene" uid="uid://djrr3b0f6m60o" path="res://scenes/grab_spot_ambiguous/grab_spot_ambiguous.tscn" id="1_tqixa"]
+[ext_resource type="PackedScene" uid="uid://ddmfo1i6bydc2" path="res://scenes/grab_spot_ambiguous/grab_point_right.tscn" id="2_v84le"]
+
+[node name="BasicGrabAmbiguous" type="Node3D"]
+
+[node name="GrabSpotAmbiguous" parent="." instance=ExtResource("1_tqixa")]
+
+[node name="GrabPointRight" parent="GrabSpotAmbiguous" instance=ExtResource("2_v84le")]

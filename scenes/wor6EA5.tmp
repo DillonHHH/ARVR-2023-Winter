@@ -1,0 +1,184 @@
+[gd_scene load_steps=27 format=3 uid="uid://d3cg4g78fesy"]
+
+[ext_resource type="Script" path="res://scripts/World.gd" id="1_wwmhh"]
+[ext_resource type="PackedScene" uid="uid://cf3qvptkcaxh7" path="res://scenes/grab_point_ambiguous/grab_point_ambiguous.tscn" id="2_ipx3y"]
+[ext_resource type="PackedScene" uid="uid://dy8fwlxqi0512" path="res://scenes/player.tscn" id="2_wsuvw"]
+[ext_resource type="PackedScene" uid="uid://cgxw0wyknem6a" path="res://scenes/grab_point_ambiguous/grab_point_left.tscn" id="3_f6vds"]
+[ext_resource type="Shader" path="res://scripts/shader.gdshader" id="3_mge4n"]
+[ext_resource type="Shader" path="res://scenes/plane.gdshader" id="3_om6q6"]
+[ext_resource type="PackedScene" uid="uid://ddmfo1i6bydc2" path="res://scenes/grab_point_ambiguous/grab_point_right.tscn" id="4_xa46g"]
+[ext_resource type="PackedScene" uid="uid://coedb0q0mjayj" path="res://scenes/grab_point_ambiguous/preview_hands_editor_only.tscn" id="5_0r15v"]
+[ext_resource type="PackedScene" uid="uid://bj1x2l346crm4" path="res://scenes/grab_point_ambiguous/grab_area.tscn" id="7_l8uhx"]
+
+[sub_resource type="Environment" id="Environment_xs4d0"]
+sdfgi_enabled = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_s07yx"]
+render_priority = 0
+shader = ExtResource("3_mge4n")
+
+[sub_resource type="QuadMesh" id="QuadMesh_eecyd"]
+lightmap_size_hint = Vector2i(12, 12)
+material = SubResource("ShaderMaterial_s07yx")
+flip_faces = true
+add_uv2 = true
+size = Vector2(2, 2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fjj1w"]
+transparency = 1
+albedo_color = Color(0.427451, 0.658824, 0.890196, 0.0941176)
+metallic = 0.18
+metallic_specular = 0.1
+refraction_enabled = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_xxftu"]
+material = SubResource("StandardMaterial3D_fjj1w")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m3d0e"]
+albedo_color = Color(0.909804, 0.866667, 0.192157, 1)
+metallic = 1.0
+metallic_specular = 0.0
+roughness = 0.46
+emission_energy_multiplier = 16.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_yeyk1"]
+material = SubResource("StandardMaterial3D_m3d0e")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aevae"]
+albedo_color = Color(0.235294, 0.427451, 0.192157, 1)
+metallic = 0.85
+metallic_specular = 0.05
+
+[sub_resource type="BoxMesh" id="BoxMesh_j6a2b"]
+material = SubResource("StandardMaterial3D_aevae")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_82sqp"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_qcdtc"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0fv3b"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dns68"]
+render_priority = 0
+shader = ExtResource("3_om6q6")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_bbcq1"]
+material = SubResource("ShaderMaterial_dns68")
+subdivide_width = 64
+subdivide_depth = 64
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1ltre"]
+albedo_color = Color(0.454286, 0.889754, 0, 1)
+
+[sub_resource type="PrismMesh" id="PrismMesh_vgrvq"]
+lightmap_size_hint = Vector2i(14, 21)
+material = SubResource("StandardMaterial3D_1ltre")
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_uam4v"]
+points = PackedVector3Array(0, 0.5, 0.5, 0.5, -0.5, 0.5, 0, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
+
+[node name="World" type="Node3D"]
+script = ExtResource("1_wwmhh")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_xs4d0")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.453788, 0.89111, 0, -0.89111, 0.453788, 0.870704, 3.83882, -1.32826)
+light_energy = 4.005
+light_indirect_energy = 1.685
+light_volumetric_fog_energy = 0.755
+shadow_enabled = true
+
+[node name="player" parent="." instance=ExtResource("2_wsuvw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.383117)
+
+[node name="shader mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.82102, 0.252485, 2.15581)
+cast_shadow = 0
+instance_shader_parameters/strength = -2.4
+mesh = SubResource("QuadMesh_eecyd")
+skeleton = NodePath("../player")
+
+[node name="geometry" type="Node3D" parent="."]
+
+[node name="cubeglass" type="MeshInstance3D" parent="geometry"]
+transform = Transform3D(0.553755, -0.83268, 0, 0.814865, 0.541908, 0.205743, -0.171318, -0.113931, 0.978606, -1.62436, -0.0417149, -2.11038)
+mesh = SubResource("BoxMesh_xxftu")
+skeleton = NodePath("../..")
+
+[node name="cubegold" type="MeshInstance3D" parent="geometry"]
+transform = Transform3D(0.94981, -0.309323, 0.0466889, 0.292623, 0.931282, 0.216991, -0.110601, -0.192438, 0.975056, 1.46006, -0.0457134, -2.33207)
+mesh = SubResource("BoxMesh_yeyk1")
+skeleton = NodePath("../..")
+
+[node name="floor" type="MeshInstance3D" parent="geometry"]
+transform = Transform3D(26.5117, 0, 0, 0, 0.144636, 0, 0, 0, 22.6761, 0, -0.273619, 0)
+mesh = SubResource("BoxMesh_j6a2b")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="geometry/floor"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="geometry/floor/StaticBody3D"]
+shape = SubResource("BoxShape3D_82sqp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="geometry"]
+transform = Transform3D(1, 0, 0, 0, 0.0596392, 0, 0, 0, 1, 0.083362, 1.00401, -0.292371)
+mesh = SubResource("BoxMesh_qcdtc")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="geometry/MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="geometry/MeshInstance3D/StaticBody3D"]
+shape = SubResource("BoxShape3D_0fv3b")
+
+[node name="plane" type="MeshInstance3D" parent="geometry"]
+transform = Transform3D(0.714685, -0.699446, 0.00133688, 0.699363, 0.714627, 0.0141874, -0.0108787, -0.00920456, 0.999899, 4.58787, -0.189349, 1.57458)
+instance_shader_parameters/scale = 0.0
+mesh = SubResource("PlaneMesh_bbcq1")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="geometry"]
+transform = Transform3D(0.176401, -0.0855437, 0.00101216, -0.0979163, -0.154098, -0.00230392, -0.00129844, -0.00086249, 0.311246, -0.516529, 1.10835, -0.0269473)
+mesh = SubResource("PrismMesh_vgrvq")
+skeleton = NodePath("../../grabbable/MeshInstance3D")
+
+[node name="grabbable" type="RigidBody3D" parent="."]
+transform = Transform3D(0.177153, -0.984183, 0, 0.984183, 0.177153, 0, 0, 0, 1, 0.0924244, 1.18891, -0.0249591)
+continuous_cd = true
+
+[node name="grab_point_ambiguous" parent="grabbable" instance=ExtResource("2_ipx3y")]
+animation = "Grip 5"
+
+[node name="grab_point_left" parent="grabbable/grab_point_ambiguous" instance=ExtResource("3_f6vds")]
+transform = Transform3D(-0.910409, 0.413708, 0, -0.413708, -0.910409, 0, 0, 0, 1, 0.266142, 0.0135152, 0.124509)
+
+[node name="grab_point_right" parent="grabbable/grab_point_ambiguous" instance=ExtResource("4_xa46g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.27504, -0.0334574, 0.112453)
+
+[node name="grab_shape" parent="grabbable/grab_point_ambiguous" instance=ExtResource("7_l8uhx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.248223, -0.0157586, 0.078707)
+
+[node name="preview_hands_editor_only" parent="grabbable/grab_point_ambiguous" instance=ExtResource("5_0r15v")]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="grabbable"]
+transform = Transform3D(0.231776, -0.165841, -0.00116234, 0.165842, 0.231779, -0.000336116, 0.00114087, -0.000403019, 0.284997, 0.0695502, 0.0163794, -0.00342134)
+mesh = SubResource("PrismMesh_vgrvq")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="grabbable"]
+transform = Transform3D(0.231776, -0.165841, -0.00116234, 0.165842, 0.231779, -0.000336116, 0.00114087, -0.000403019, 0.284997, 0.0695502, 0.0163793, -0.00342134)
+shape = SubResource("ConvexPolygonShape3D_uam4v")
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.602014, 0.439687, 2.66274)
+text = "vertex"
+font_size = 14
+outline_size = 6
+width = 1500.0
+
+[node name="Label3D2" type="Label3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.200452, 0.441561, 2.66241)
+text = "vignette"
+font_size = 14
+outline_size = 6
+width = 1500.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]

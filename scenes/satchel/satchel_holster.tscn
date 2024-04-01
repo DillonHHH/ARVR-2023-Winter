@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://cgvpocwvsbfep"]
+
+[ext_resource type="Script" path="res://scenes/satchel/satchel_holster.gd" id="1_11iqf"]
+[ext_resource type="PackedScene" uid="uid://dtytcaccqsyot" path="res://scenes/satchel/satchel.tscn" id="2_8ybic"]
+
+[node name="SatchelHolster" type="Node3D"]
+script = ExtResource("1_11iqf")
+satchel = ExtResource("2_8ybic")

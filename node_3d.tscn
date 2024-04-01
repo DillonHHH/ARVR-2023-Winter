@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://cfptnsjo7i801"]
+
+[ext_resource type="Script" path="res://node_3d.gd" id="1_xr656"]
+[ext_resource type="PackedScene" uid="uid://dy8fwlxqi0512" path="res://scenes/player.tscn" id="2_ib46d"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1xucd"]
+albedo_color = Color(0.196078, 0.666667, 0.0980392, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_huvn8"]
+material = SubResource("StandardMaterial3D_1xucd")
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_8pte7"]
+points = PackedVector3Array(0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5)
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_xr656")
+
+[node name="Player" parent="." instance=ExtResource("2_ib46d")]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1631.08, 0, 0, 0, 0.16106, 0, 0, 0, 1399.13, 0, -52.5596, 0)
+mesh = SubResource("BoxMesh_huvn8")
+skeleton = NodePath("StaticBody3D")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_8pte7")
+
+[editable path="Player"]
+[editable path="Player/HandLeft/Hand/Hand_Nails_L"]
+[editable path="Player/HandRight/Hand/Hand_Nails_R2"]
